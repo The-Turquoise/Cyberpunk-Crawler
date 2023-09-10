@@ -2,21 +2,24 @@ using UnityEngine;
 
 public class BackgroundParallax : MonoBehaviour
 {
-    [SerializeField] private Transform camPos;
-
-    [SerializeField] private float offset;
-    void Update()
+    [SerializeField] Transform cam;
+    [SerializeField] float parallaxEffect;
+    [SerializeField] private float startPos, length;
+    [SerializeField] private float temp, distance;
+    private void Awake()
     {
-        float rightRange = transform.position.x + offset;
-        float leftRange = transform.position.x - offset;
-
-        if (camPos.position.x >= rightRange) SetPosition(offset);
-
-        if (camPos.position.x <= leftRange) SetPosition(-offset);
+        startPos = transform.position.x;
+        length = GetComponent<MeshRenderer>().bounds.size.x;
     }
 
-    private void SetPosition(float distance)
+    private void LateUpdate()
     {
-        transform.position = new Vector2(transform.position.x + distance, transform.position.y);
+        temp = cam.transform.position.x * (1 + parallaxEffect);
+        distance = cam.transform.position.x * -parallaxEffect;
+
+        transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
+
+        if (temp > startPos + length) startPos += length;
+        else if (temp < startPos - length) startPos -= length;
     }
 }

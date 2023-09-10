@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] Character character;
-    [SerializeField] Transform[] points;
     private Vector3 targetPos;
+    private Vector3[] points = new Vector3[2];
     private int pointIndex;
     void Start()
     {
+        points[0] = transform.position + transform.right * 2f;
+        points[1] = transform.position - transform.right * 2f;
         SetTargetPosition(0);
     }
 
@@ -27,6 +27,6 @@ public class EnemyAI : MonoBehaviour
 
     public void SetTargetPosition(int index)
     {
-        targetPos = points[index].position;
+        targetPos = points[index];
     }
 }

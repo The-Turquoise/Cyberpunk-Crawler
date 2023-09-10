@@ -6,13 +6,19 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Character character;
 
+    private float horizontalInput;
     private void Update()
     {
-        character.Move(Input.GetAxisRaw("Horizontal"));
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        character.Move(horizontalInput);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             character.Jump();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            character.Attack();
         }
     }
 }
